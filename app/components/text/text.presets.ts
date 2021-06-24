@@ -3,7 +3,7 @@ import { color, typography } from '../../theme/'
 
 const BASE: TextStyle = {
     fontFamily: typography.primary,
-    fontSize: 16,
+    fontSize: 14,
     color: color.white
 }
 
@@ -35,6 +35,10 @@ export const presets = {
     h4: {
         ...BASE_BOLD,
         fontSize: 18,
+    },
+    small: {
+        ...BASE,
+        fontSize: 11,
     }
 }
 
