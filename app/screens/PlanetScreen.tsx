@@ -1,13 +1,12 @@
 import React from 'react';
-import { View, Pressable, useWindowDimensions, Image, ScrollView, Linking } from 'react-native';
+import { View, Pressable, useWindowDimensions, ScrollView, Linking, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Text from '../components/text/text';
 import { color, spacing, typography } from '../theme';
 import DrawerSvg from '../svg/DrawerSvg';
 import Divider from '../components/divider';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { TabView, SceneMap, TabBar, TabBarProps, } from 'react-native-tab-view';
+import { TabView, TabBar} from 'react-native-tab-view';
 import { Route } from '@react-navigation/native';
 import { PlanetType } from '../../App';
 import { MercurySvg, EarthSvg, JupiterSvg, MarsSvg, NeptuneSvg, SaturnSvg, UranusSvg, VenusSvg } from '../svg/index'
@@ -48,7 +47,7 @@ const getSvg = (name: string) => {
 
 const Section = ({ title, value }: {title: string, value: string}) => {
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center',  borderWidth: 1, borderColor: color.grey, justifyContent: 'space-between', marginBottom: spacing[4], padding: spacing[4] }}>
+        <View style={styles.section}>
             <Text preset="small">{title}</Text>
             <Text preset="h2">{value}</Text>
         </View>
@@ -93,13 +92,7 @@ const FirstRoute = ({ planet } : {planet: PlanetType}) => {
 const SecondRoute = ({ planet }: { planet: PlanetType }) => {
     const { name } = planet;
     return (
-        <View
-            style={{
-                flex: 1,
-                backgroundColor: color.black,
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
+        <View style={styles.emptyView}>
             {getSvg(name)}
             <Text preset="h1" style={{ padding: spacing[8] }}>NO DATA YET.</Text>
         </View>
@@ -109,13 +102,7 @@ const SecondRoute = ({ planet }: { planet: PlanetType }) => {
 const ThirdRoute = ({ planet }: { planet: PlanetType }) => {
     const { name } = planet;
     return (
-        <View
-            style={{
-                flex: 1,
-                backgroundColor: color.black,
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
+        <View style={styles.emptyView}>
             {getSvg(name)}
             <Text preset="h1" style={{ padding: spacing[8] }}>NO DATA YET.</Text>
         </View>
@@ -165,14 +152,7 @@ export default function PlanetScreen({navigation, route}: Props) {
 
     return (
         <SafeAreaView style={{ backgroundColor: color.black, flex: 1 }}>
-            <View
-                style={{
-                    paddingHorizontal: spacing[6],
-                    paddingBottom: spacing[4],
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                }}>
+            <View style={styles.header}>
                 <Text preset="h2">THE PLANETS</Text>
                 <Pressable onPress={() => navigation.openDrawer()}>
                     <DrawerSvg />
@@ -192,3 +172,29 @@ export default function PlanetScreen({navigation, route}: Props) {
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    section: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: color.grey,
+        justifyContent: 'space-between',
+        marginBottom: spacing[4],
+        padding: spacing[4],
+    },
+    emptyView: {
+        flex: 1,
+        backgroundColor: color.black,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    header: {
+        paddingHorizontal: spacing[6],
+        paddingBottom: spacing[4],
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: spacing[4],
+    }
+});
