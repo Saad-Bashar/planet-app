@@ -4,11 +4,11 @@
     "slug": "planet-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/planet-logo.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/splash-planet.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Frontend Mentor Project.\n\nCompleted this challenge from frontend-mentor. Here is the challenge link: https://www.frontendmentor.io/challenges/planets-fact-site-gazqN8w_f.",
+    "githubUrl": "https://github.com/Saad-Bashar/planet-app"
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, useWindowDimensions, ScrollView, Linking, StyleSheet } from 'react-native';
+import { View, Pressable, useWindowDimensions, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Text from '../components/text/text';
 import { color, spacing, typography } from '../theme';
@@ -7,10 +7,11 @@ import DrawerSvg from '../svg/DrawerSvg';
 import Divider from '../components/divider';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { TabView, TabBar} from 'react-native-tab-view';
-import { Route } from '@react-navigation/native';
 import { PlanetType } from '../../App';
-import { MercurySvg, EarthSvg, JupiterSvg, MarsSvg, NeptuneSvg, SaturnSvg, UranusSvg, VenusSvg } from '../svg/index'
-import IconSource from '../svg/IconSource';
+import PlanetOverviewTab from '../components/planet-overview-tab';
+import PlanetStructureTab from '../components/planet-structure-tab';
+import PlanetSurfaceTab from '../components/planet-surface-tab';
+import StarBackground from '../svg/StarBackground';
 
 const mercury =  {
     name: 'mercury',
@@ -24,89 +25,23 @@ const mercury =  {
     wikiLink: "https://en.wikipedia.org/wiki/Mercury",
 };
 
-const getSvg = (name: string) => {
-    switch (name) {
-        case 'mercury':
-            return <MercurySvg />
-        case 'earth':
-            return <EarthSvg />
-        case 'jupiter':
-            return <JupiterSvg />
-        case 'mars': 
-            return <MarsSvg />
-        case 'neptune':
-            return <NeptuneSvg />
-        case 'saturn':
-            return <SaturnSvg />
-        case 'uranus':
-            return <UranusSvg />
-        case 'venus':
-            return <VenusSvg />
-    }
-}
-
-const Section = ({ title, value }: {title: string, value: string}) => {
+const OverviewTab = ({ planet } : {planet: PlanetType}) => {
     return (
-        <View style={styles.section}>
-            <Text preset="small">{title}</Text>
-            <Text preset="h2">{value}</Text>
-        </View>
-    )
-}
-
-const FirstRoute = ({ planet } : {planet: PlanetType}) => {
-    const { name, description, radius, revolutionTime, rotationTime, wikiLink, avgTemp } = planet;
-    return (
-        <ScrollView style={{ flex: 1, backgroundColor: color.black }}>
-            <View style={{ alignSelf: 'center', paddingVertical: spacing[8], paddingHorizontal: spacing[4]}}>
-                {getSvg(name)}
-            </View>
-            <View style={{ paddingHorizontal: spacing[5] }}>
-                <Text centered preset='h1' style={{ textTransform: 'uppercase' }}>{name}</Text>
-                <Text centered style={{ paddingTop: spacing[4], lineHeight: 21 }}>
-                    {description}
-                </Text>
-            </View>
-
-            <Pressable onPress={() => Linking.openURL(wikiLink)} style={{ flexDirection: 'row', alignSelf: 'center', alignItems: 'center', padding: spacing[5] }}>
-                <Text centered>
-                    Source: {' '}
-                </Text>
-                <Text style={{ fontWeight: 'bold', textDecorationLine: 'underline', marginRight: 4 }}>
-                    Wikipedia
-                </Text>
-                <IconSource />
-            </Pressable>
-
-            <View style={{ padding: spacing[5] }}>
-                <Section title="ROTATION TIME" value={rotationTime} />
-                <Section title="REVOLUTION TIME" value={revolutionTime} />
-                <Section title="RADIUS" value={radius} />
-                <Section title="AVERAGE TEMP." value={avgTemp} />
-            </View>
-        </ScrollView>
-    )
+        <PlanetOverviewTab planet={planet} />
+    );
 }
 
 
-const SecondRoute = ({ planet }: { planet: PlanetType }) => {
-    const { name } = planet;
+const StructureTab = ({ planet }: { planet: PlanetType }) => {
     return (
-        <View style={styles.emptyView}>
-            {getSvg(name)}
-            <Text preset="h1" style={{ padding: spacing[8] }}>NO DATA YET.</Text>
-        </View>
+        <PlanetStructureTab planet={planet} />
     );
 };
 
-const ThirdRoute = ({ planet }: { planet: PlanetType }) => {
-    const { name } = planet;
-    return (
-        <View style={styles.emptyView}>
-            {getSvg(name)}
-            <Text preset="h1" style={{ padding: spacing[8] }}>NO DATA YET.</Text>
-        </View>
-    );
+const SurfaceTab = ({ planet }: { planet: PlanetType }) => {
+   return (
+       <PlanetSurfaceTab planet={planet} />
+   )
 };
 
 interface Props {
@@ -133,11 +68,11 @@ export default function PlanetScreen({navigation, route}: Props) {
     const renderScene = ({ route: sceneRoute }: {route: any}) => {
         switch (sceneRoute.key) {
           case 'first':
-            return <FirstRoute planet={planet} />;
+            return <OverviewTab planet={planet} />;
           case 'second':
-            return <SecondRoute planet={planet} />;
+            return <StructureTab planet={planet} />;
           default:
-            return <ThirdRoute planet={planet} />;
+            return <SurfaceTab planet={planet} />;
         }
       };
 
@@ -152,6 +87,9 @@ export default function PlanetScreen({navigation, route}: Props) {
 
     return (
         <SafeAreaView style={{ backgroundColor: color.black, flex: 1 }}>
+            <View style={StyleSheet.absoluteFill}>
+                <StarBackground />
+            </View>
             <View style={styles.header}>
                 <Text preset="h2">THE PLANETS</Text>
                 <Pressable onPress={() => navigation.openDrawer()}>
