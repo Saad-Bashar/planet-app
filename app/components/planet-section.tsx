@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { color, spacing } from '../theme';
 import Text from './text/text';
 
-const Section = ({ title, value }: { title: string; value: string }) => {
+const Section = ({ title, value }: { title: string; value: string | number }) => {
     return (
         <View style={styles.section}>
             <Text preset="small">{title}</Text>
@@ -13,9 +13,9 @@ const Section = ({ title, value }: { title: string; value: string }) => {
 }
 
 interface Props {
-    rotationTime: string;
+    rotationTime: number;
     revolutionTime: string;
-    radius: string;
+    radius: number;
     avgTemp: string;
 }
 

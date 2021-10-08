@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, useWindowDimensions, StyleSheet } from 'react-native';
+import { View, Pressable, useWindowDimensions, StyleSheet, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Text from '../components/text/text';
 import { color, spacing, typography } from '../theme';
@@ -12,6 +12,7 @@ import PlanetOverviewTab from '../components/planet-overview-tab';
 import PlanetStructureTab from '../components/planet-structure-tab';
 import PlanetSurfaceTab from '../components/planet-surface-tab';
 import StarBackground from '../svg/StarBackground';
+import Modal from 'react-native-modal';
 
 const mercury =  {
     name: 'mercury',
